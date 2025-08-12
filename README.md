@@ -7,15 +7,32 @@ Features include:
 
 ## Installation
 
+For installation in conda environment with [Jupyter](https://jupyter.org/), clone the ellipsx repository:
 ```
+git clone https://github.com/dmstreltsov/ellipsx.git
+```
+
+Create conda environment from yaml file:
+```
+cd ellipsx
 conda env create --file environment.yml
 ```
 
-## Usage
+Activate this environment and run Jupyter notebook:
 
 ```
 conda activate ellipsx
 jupyter notebook
 ```
 
-Do not forget to select a proper kernel in the Jupyter if you installed a few ones, i.e. the one from conda env: ellipsx.
+Do not forget to select a proper kernel in the Jupyter if you installed a few ones, i.e. the one from created conda environment `conda env: ellipsx`.
+
+## Minimal installation
+For minimal installation:
+```
+pip install git+https://github.com/dmstreltsov/ellipsx.git
+```
+
+Requires Python 3.10+, Jax and [Optimistix]{https://github.com/patrick-kidger/optimistix} for nonlinear optimization with Jax.
+
+
