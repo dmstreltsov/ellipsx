@@ -2,9 +2,9 @@
 name = "ellipsx"
 version = "0.0.1"
 authors = [
-	{name = "Dmitry Streltsov", email = "streltsov.dmitry@gmail.com"},
+	{name = "Dmitry Streltsov", email = "streltsov@ispm.ru"},
 ]
-description = "Ellipsometry data analysis with JAX"
+description = "Ellipsometry data analysis in JAX"
 readme = "README.md"
 license = "MIT"
 keywords = [
@@ -20,12 +20,12 @@ classifiers = [
 	"Topic :: Scientific/Engineering :: Physics"
 ]
 dependencies =[
-	"jax~=0.6",
+	"jax=0.6.2",
 	"jaxtyping>=0.2.24",
 	"optimistix"
 ]
 requires-python = ">=3.10"
-
+urls = {repository = "https://github.com/dmstreltsov/ellipsx"}
 [build-system]
 requires = ["hatchling"]
 build-backend = "hatchling.build"

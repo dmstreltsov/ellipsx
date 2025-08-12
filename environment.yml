@@ -6,9 +6,9 @@ dependencies:
   - jax=0.6.2
   - jaxtyping
   - optimistix
-  - jupyter
+  - ipykernel
   - matplotlib
-  - nb_conda_kernels
+  - pandas
   - pip
   - pip:
       - --editable . 
