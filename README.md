@@ -33,6 +33,6 @@ For minimal installation:
 pip install git+https://github.com/dmstreltsov/ellipsx.git
 ```
 
-Requires Python 3.10+, Jax and [Optimistix]{https://github.com/patrick-kidger/optimistix} for nonlinear optimization with Jax.
+Requires Python 3.10+, Jax and [Optimistix](https://github.com/patrick-kidger/optimistix) for nonlinear optimization with Jax.
 
 
