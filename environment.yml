@@ -1,0 +1,15 @@
+name: ellipsx
+channels:
+  - conda-forge
+  - defaults
+dependencies:
+  - jax=0.6.2
+  - jaxtyping
+  - optimistix
+  - jupyter
+  - matplotlib
+  - nb_conda_kernels
+  - pip
+  - pip:
+      - --editable . 
+      
