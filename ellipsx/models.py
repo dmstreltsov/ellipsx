@@ -1,3 +1,6 @@
+"""
+Models of the samples
+"""
 import jax
 import jax.numpy as jnp
 from jaxtyping import Float, Complex, Array
@@ -11,8 +14,9 @@ def calc_m_matrices_one_layer(phi_deg: Float,
                               n_f: Complex,
                               d_f: Float,
                               n_sub: Complex,
-                              n0: Complex=1.0 + 0j,
-                              wl: Float=632.8) -> tuple[Complex[Array, "2 2"], Complex[Array, "2 2"]]:
+                              n0: Complex = 1.0 + 0j,
+                              wl: Float = 632.8) -> tuple[Complex[Array, "2 2"],
+                                                          Complex[Array, "2 2"]]:
     """
     Calculate the characteristic matrices M_pp and M_ss for the layer stack consisting of
     one uniform film on the substrate
@@ -28,9 +32,7 @@ def calc_m_matrices_one_layer(phi_deg: Float,
 
     Returns:
         Tuple of M_pp and M_ss matrices
-    
     """
-    phi = jnp.radians(phi_deg)
     chi_sub_pp, chi_sub_ss = calc_chi_substrate(phi_deg, n_sub, n0)
     p_pp, p_ss = calc_p_matrices(phi_deg, n_f, d_f, n0, wl)
     chi_0_pp, chi_0_ss = calc_chi_ambient(phi_deg, n0)
@@ -46,12 +48,14 @@ def calc_m_matrices_three_layers(phi_deg: Float,
                                  n_sub: Complex,
                                  d_0f: Float,
                                  d_fs: Float,
-                                 n0: Complex=1.0 + 0j,
-                                 wl: Float=632.8) -> tuple[Complex[Array, "2 2"], Complex[Array, "2 2"]]:
+                                 n0: Complex = 1.0 + 0j,
+                                 wl: Float = 632.8) -> tuple[Complex[Array, "2 2"],
+                                                             Complex[Array, "2 2"]]:
     """
     Calculate the characteristic matrices M_pp and M_ss for the layer stack consisting of
-    three layers on the substrate, i.e. the uniform film layer, the interface layer between the film and the ambient,
-    and the  interface layer between the film and the substrate. The refractive index of the interface layer is modelled
+    three layers on the substrate, i.e. the uniform film layer, the interface layer between
+    the film and the ambient, and the  interface layer between the film and the substrate.
+    The refractive index of the interface layer is modelled
     with the Bruggeman EMA, assuming equal content of both adjacent phases.
 
     Args:
@@ -66,10 +70,7 @@ def calc_m_matrices_three_layers(phi_deg: Float,
 
     Returns:
         Tuple of M_pp and M_ss matrices
-    
     """
-    phi = jnp.radians(phi_deg)
-    
     chi_sub_pp, chi_sub_ss = calc_chi_substrate(phi_deg, n_sub, n0)
     p_f_pp, p_f_ss = calc_p_matrices(phi_deg, n_f, d_f, n0, wl)
     chi_0_pp, chi_0_ss = calc_chi_ambient(phi_deg, n0)
@@ -113,12 +114,12 @@ def calc_psi_delta_one_layer(phi_deg: Float,
                              n_f: Complex,
                              d_f: Float,
                              n_sub: Complex,
-                             n0: Complex=1.0 + 0j,
-                             wl: Float=632.8) -> tuple[Float, Float]:
+                             n0: Complex = 1.0 + 0j,
+                             wl: Float = 632.8) -> tuple[Float, Float]:
     """
     Compute the ellipsometric angles Psi and Delta for the layer stack consisting of
     one uniform film on the substrate
-    
+
     Args:
         phi_deg: incidence angle of the light beam in ambient in degrees
         n_f: complex refractive index of the film
@@ -140,9 +141,9 @@ def calc_psi_delta_one_layer_vec(phi_deg: Float[Array, 'len'],
                                  n_f: Complex,
                                  d_f: Float,
                                  n_sub: Complex,
-                                 n0: Complex=1.0 + 0j,
-                                 wl: Float=632.8) -> tuple[Float[Array, 'len'],
-                                                           Float[Array, 'len']]:
+                                 n0: Complex = 1.0 + 0j,
+                                 wl: Float = 632.8) -> tuple[Float[Array, 'len'],
+                                                             Float[Array, 'len']]:
     """
     Vectorized version of calc_psi_delta_one_layer function for array of incidence angles of
     the light beam in ambient.
@@ -154,7 +155,7 @@ def calc_psi_delta_one_layer_vec(phi_deg: Float[Array, 'len'],
                              None,
                              None,
                              None],
-                    out_axes=(0))(phi_deg, n_f, d_f, n_sub, n0, wl)
+                    out_axes=0)(phi_deg, n_f, d_f, n_sub, n0, wl)
 
 
 @jax.jit
@@ -164,12 +165,13 @@ def calc_psi_delta_three_layers(phi_deg: Float,
                                 n_sub: Complex,
                                 d_0f: Float,
                                 d_fs: Float,
-                                n0: Complex=1.0 + 0j,
-                                wl: Float=632.8) -> tuple[Float, Float]:
+                                n0: Complex = 1.0 + 0j,
+                                wl: Float = 632.8) -> tuple[Float, Float]:
     """
     Compute the ellipsometric angles Psi and Delta for the layer stack consisting of
-    three layers on the substrate, i.e. the uniform film layer, the interface layer between the film and the ambient,
-    and the  interface layer between the film and the substrate. The refractive index of the interface layer is modelled
+    three layers on the substrate, i.e. the uniform film layer, the interface layer between
+    the film and the ambient, and the  interface layer between the film and the substrate.
+    The refractive index of the interface layer is modelled
     with the Bruggeman EMA, assuming equal content of both adjacent phases.
 
     Args:
@@ -184,7 +186,6 @@ def calc_psi_delta_three_layers(phi_deg: Float,
 
     Returns:
         Tuple of the Psi and Delta ellipsometric angles in degrees
-    
     """
     m_pp, m_ss = calc_m_matrices_three_layers(phi_deg, n_f, d_f, n_sub, d_0f, d_fs, n0, wl)
     psi, delta = calc_psi_delta_from_m_matrices(m_pp, m_ss)
@@ -198,8 +199,9 @@ def calc_psi_delta_three_layers_vec(phi_deg: Float[Array, 'len'],
                                     n_sub: Complex,
                                     d_0f: Float,
                                     d_fs: Float,
-                                    n0: Complex=1.0 + 0j,
-                                    wl: Float=632.8) -> tuple[Float[Array, 'len'], Float[Array, 'len']]:
+                                    n0: Complex = 1.0 + 0j,
+                                    wl: Float = 632.8) -> tuple[Float[Array, 'len'],
+                                                                Float[Array, 'len']]:
     """
     Vectorized version of calc_psi_delta_three_layers function for array of incidence angles of
     the light beam in ambient.
@@ -213,4 +215,4 @@ def calc_psi_delta_three_layers_vec(phi_deg: Float[Array, 'len'],
                              None,
                              None,
                              None],
-                    out_axes=(0))(phi_deg, n_f, d_f, n_sub, d_0f, d_fs, n0, wl)
+                    out_axes=0)(phi_deg, n_f, d_f, n_sub, d_0f, d_fs, n0, wl)
