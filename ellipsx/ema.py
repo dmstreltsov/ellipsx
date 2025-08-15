@@ -1,12 +1,13 @@
 """
 Effective medium approximations
 """
+from functools import partial
 import jax
 import jax.numpy as jnp
 from jaxtyping import Complex, Float
 
 
-@jax.jit
+@partial(jax.jit, static_argnames=('f',))
 def bruggeman(n1: Complex,
               n2: Complex,
               f: Float = 0.5) -> Complex:
