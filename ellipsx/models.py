@@ -1,6 +1,7 @@
 """
 Ellipsometric models of the sample
 """
+
 import jax
 import jax.numpy as jnp
 from jaxtyping import Float, Complex, Array
